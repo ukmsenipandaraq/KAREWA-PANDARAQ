@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KAREWA PANDARAQ</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; margin:0; padding:0; background:#f9f9f9; }
+    header { background:linear-gradient(135deg, #1a237e, #283593); color:white; padding:40px 20px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,0.2); }
+    nav { background:white; padding:15px; text-align:center; box-shadow:0 2px 4px rgba(0,0,0,0.1); position:sticky; top:0; }
+    nav a { color:#1a237e; margin:0 20px; text-decoration:none; font-weight:bold; }
+    nav a:hover { text-decoration:underline; }
+    .hero { background:url('https://source.unsplash.com/1600x600?art,university') center/cover; color:white; text-align:center; padding:100px 20px; }
+    .hero h2 { font-size:40px; margin-bottom:10px; }
+    .container { padding:40px 20px; }
+    .news-card { background:white; border:none; margin-bottom:30px; padding:20px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); transition:transform .3s; }
+    .news-card:hover { transform:translateY(-5px); }
+    footer { background:#1a237e; color:white; text-align:center; padding:20px; margin-top:40px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>KAREWA PANDARAQ</h1>
+    <p>Portal Berita Lembaga Kesenian Kampus</p>
+  </header>
+  <nav>
+    <a href="#">Beranda</a>
+    <a href="#profil">Profil</a>
+    <a href="#kegiatan">Kegiatan</a>
+    <a href="#galeri">Galeri</a>
+    <a href="#kontak">Kontak</a>
+  </nav>
+  <div class="hero">
+    <h2>Selamat Datang di KAREWA PANDARAQ</h2>
+    <p>Lembaga Kesenian Kampus sebagai wadah ekspresi dan pelestarian budaya</p>
+    <button style='padding:15px 30px; border:none; border-radius:30px; font-size:16px; cursor:pointer; margin:10px;'>Gabung Sekarang</button>
+    <button style='padding:15px 30px; border:none; border-radius:30px; font-size:16px; cursor:pointer; margin:10px;'>Lihat Event</button>
+  </div>
+  <div class="container">
+    <section id="profil">
+      <h2>Profil Lembaga</h2>
+      <p>KAREWA PANDARAQ adalah lembaga kesenian kampus yang berfokus pada pengembangan seni musik, tari, teater, dan seni rupa sebagai media ekspresi dan pelestarian budaya lokal.</p>
+    </section>
+    <section id="berita">
+      <h2>Berita Terbaru</h2>
+      <div class="category-menu" style="margin-bottom:20px;">
+        <button>Seni Tari</button>
+        <button>Musik & Paduan Suara</button>
+        <button>Teater</button>
+        <button>Sastra & Puisi</button>
+      </div>
+      <div class="news-card">
+        <h3>Pagelaran Seni Tari Tradisional</h3>
+        <p>Kategori: Seni Tari</p>
+        <p>Pagelaran seni tari tradisional memukau penonton dengan kolaborasi antar mahasiswa dari berbagai fakultas.</p>
+        <a href="#">Baca Selengkapnya</a>
+      </div>
+      <div class="news-card">
+        <h3>Pameran Lukisan Mahasiswa</h3>
+        <p>Kategori: Seni Rupa</p>
+        <p>Pameran lukisan menampilkan karya seni visual yang menggambarkan budaya lokal dan inovasi kreatif.</p>
+        <a href="#">Baca Selengkapnya</a>
+      </div>
+    </section>
+  
+
+    <!-- Search & Filter -->
+    <section id="search" style="margin-top:40px;">
+      <input id="searchInput" type="search" placeholder="Cari berita, penulis, atau kata kunci..." style="width:100%; padding:12px 16px; border-radius:8px; border:1px solid #e0e0e0; box-shadow:inset 0 1px 2px rgba(0,0,0,0.03);">
+    </section>
+
+    <!-- List Berita Dinamis -->
+    <section id="news-list" style="margin-top:30px;">
+      <div id="articlesContainer"></div>
+    </section>
+
+    <!-- Template Modal Detail Artikel -->
+    <div id="articleModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; padding:20px;">
+      <div style="background:#fff; max-width:900px; width:100%; border-radius:12px; padding:24px; position:relative; max-height:90vh; overflow:auto;">
+        <button id="closeModal" style="position:absolute; right:18px; top:18px; border:none; background:#f1f1f1; padding:8px 10px; border-radius:8px; cursor:pointer;">Tutup</button>
+        <h2 id="modalTitle"></h2>
+        <p id="modalMeta" style="color:#666; font-size:14px;"></p>
+        <img id="modalImage" src="" alt="" style="width:100%; border-radius:8px; margin:12px 0;">
+        <div id="modalContent" style="line-height:1.8; color:#222;"></div>
+      </div>
+    </div>
+
+    <style>
+      .category-menu button { background:transparent; border:1px solid transparent; padding:8px 14px; border-radius:999px; cursor:pointer; margin-right:8px; transition:all .25s; }
+      .category-menu button:hover { transform:translateY(-4px); box-shadow:0 6px 18px rgba(32,33,36,0.08); }
+      .category-menu button.active { background:linear-gradient(90deg,#3949ab,#1e88e5); color:#fff; }
+      .news-card .meta { color:#777; font-size:13px; margin-bottom:8px; }
+      .read-more { display:inline-block; margin-top:10px; padding:8px 14px; border-radius:8px; text-decoration:none; border:1px solid rgba(26,35,126,0.12); }
+    </style>
+
+    <script>
+      // Simulasi CMS: data artikel dalam bentuk JSON
+      const ARTICLES = [
+        {
+          id:1,
+          title: 'Pagelaran Seni Tari Tradisional Memukau',
+          category: 'Seni Tari',
+          excerpt: 'Mahasiswa menampilkan koreografi baru yang menggabungkan elemen tradisional dan kontemporer.',
+          content: '<p>Pagelaran berlangsung di auditorium kampus dengan penonton membludak...</p><p>Acara menampilkan 6 tari kreasi baru dan workshop tari tradisi.</p>',
+          image: 'https://source.unsplash.com/1200x600?dance',
+          author: 'Redaksi Karewa',
+          date: '2025-10-01'
+        },
+        {
+          id:2,
+          title: 'Pameran Lukisan Mahasiswa: Warna Lokal',
+          category: 'Seni Rupa',
+          excerpt: 'Karya-karya menonjolkan identitas lokal dan teknik campuran media.',
+          content: '<p>Pameran menghadirkan 40 karya dari mahasiswa seni rupa...</p>',
+          image: 'https://source.unsplash.com/1200x600?painting',
+          author: 'Tim Media',
+          date: '2025-09-20'
+        }
+      ];
+
+      const articlesContainer = document.getElementById('articlesContainer');
+      const searchInput = document.getElementById('searchInput');
+
+      function renderArticles(list){
+        articlesContainer.innerHTML = '';
+        if(list.length === 0) { articlesContainer.innerHTML = '<p>Tidak ada artikel ditemukan.</p>'; return; }
+        list.forEach(a=>{
+          const card = document.createElement('div');
+          card.className = 'news-card';
+          card.innerHTML = `
+            <img src="${a.image}" alt="" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;">
+            <h3>${a.title}</h3>
+            <p class="meta">${a.date} • ${a.author} • <strong>${a.category}</strong></p>
+            <p>${a.excerpt}</p>
+            <a href="#" class="read-more" data-id="${a.id}">Baca Selengkapnya</a>
+          `;
+          articlesContainer.appendChild(card);
+        });
+        // attach read more handlers
+        document.querySelectorAll('.read-more').forEach(btn=>{
+          btn.addEventListener('click', (e)=>{
+            e.preventDefault(); const id = Number(btn.getAttribute('data-id'));
+            openArticle(id);
+          });
+        });
+      }
+
+      function openArticle(id){
+        const art = ARTICLES.find(x=>x.id===id);
+        if(!art) return;
+        document.getElementById('modalTitle').innerText = art.title;
+        document.getElementById('modalMeta').innerText = `${art.date} • ${art.author} • ${art.category}`;
+        document.getElementById('modalImage').src = art.image;
+        document.getElementById('modalContent').innerHTML = art.content;
+        document.getElementById('articleModal').style.display = 'flex';
+      }
+
+      document.getElementById('closeModal').addEventListener('click', ()=>{
+        document.getElementById('articleModal').style.display = 'none';
+      });
+
+      // search
+      searchInput.addEventListener('input', (e)=>{
+        const q = e.target.value.trim().toLowerCase();
+        const filtered = ARTICLES.filter(a=> (a.title+a.excerpt+a.content+a.author+a.category).toLowerCase().includes(q) );
+        renderArticles(filtered);
+      });
+
+      // category buttons
+      document.querySelectorAll('.category-menu button').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          document.querySelectorAll('.category-menu button').forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          const cat = btn.innerText;
+          const filtered = ARTICLES.filter(a=> a.category.toLowerCase().includes(cat.toLowerCase()) );
+          renderArticles(filtered);
+        });
+      });
+
+      // initial render
+      renderArticles(ARTICLES);
+
+    </script>
+
+  </div>
+  <footer>
+    <p>&copy; 2025 KAREWA PANDARAQ | Lembaga Kesenian Kampus Online</p>
+  </footer>
+</body>
+</html>
